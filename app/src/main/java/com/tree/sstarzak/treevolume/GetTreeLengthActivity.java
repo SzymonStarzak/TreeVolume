@@ -2,7 +2,6 @@ package com.tree.sstarzak.treevolume;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.hardware.Camera;
 import android.os.Bundle;
@@ -42,6 +41,12 @@ public class GetTreeLengthActivity extends Activity {
         mySensors.releaseSensors();
     }
 
+    @Override protected void onPause() {
+        super.onPause();
+        mCamera.release();
+        mySensors.releaseSensors();
+    }
+
     private Runnable updateTimerThread = new Runnable() {
         public void run() {
             TextView tf = (TextView) findViewById(R.id.textView);
@@ -68,34 +73,32 @@ public class GetTreeLengthActivity extends Activity {
             measurement.setObject_length(objectLength.getLengh());
             measurement.save();
 
-            mCamera.release();
-            mySensors.releaseSensors();
+          /*  Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(intent);*/
 
-            Intent intent = new Intent(getApplicationContext(), DbActivity.class);
-            startActivity(intent);
+            finish();
         }
         touch_counter++;
         return super.onTouchEvent(event);
     }
 
     @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-       /* mySensors.releaseSensors();
-        mCamera.release();
-        finish();*/
-    }
+    public void onResume() {
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_get_tree_length);
-
-        distance = getIntent().getFloatExtra("distance", 0);
+        Measurement measurement = Measurement.listAll(Measurement.class).get(0);
+        distance = measurement.getDevice_height();
 
         touch_counter = 0;
 
-        mCamera = Camera.open();
+        mCamera = null;
+
+        try {
+            mCamera = Camera.open();
+        }
+        catch (Exception e) {
+            finish();
+        }
+
 
         Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
         switch (display.getRotation()) {
@@ -111,7 +114,7 @@ public class GetTreeLengthActivity extends Activity {
                 break;
         }
 
-        // Create our Preview view and set it as the content of our activity.
+
         mPreview = new CameraPreview(this, mCamera);
         RelativeLayout preview = (RelativeLayout) findViewById(R.id.camera_preview);
         preview.addView(mPreview);
@@ -121,7 +124,13 @@ public class GetTreeLengthActivity extends Activity {
 
         customHandler = new Handler();
         customHandler.postDelayed(updateTimerThread, 0);
+        super.onResume();
+    }
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_get_tree_length);
     }
 
 

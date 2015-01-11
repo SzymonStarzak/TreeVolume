@@ -2,7 +2,6 @@ package com.tree.sstarzak.treevolume;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.hardware.Camera;
 import android.os.Bundle;
@@ -25,16 +24,17 @@ public class GetDistanceActivity extends Activity  {
 
     Handler customHandler;
 
-    Integer measure_device_height;
+    float measure_device_height;
 
     ObjectDistance objectDistance;
 
     @Override
     protected void onStop() {
         super.onStop();
-        /*mCamera.release();
-        mySensors.releaseSensors();*/
+        mCamera.release();
+        mySensors.releaseSensors();
     }
+
 
     private Runnable updateTimerThread = new Runnable()
     {
@@ -57,23 +57,27 @@ public class GetDistanceActivity extends Activity  {
 
         mCamera.release();
         mySensors.releaseSensors();
+
         objectDistance = new ObjectDistance(getApplicationContext(), mySensors.getPitch_angle(), mySensors.getRoll_angle(),measure_device_height);
-        Intent intent = new Intent(getApplicationContext(), GetTreeLengthActivity.class);
-        intent.putExtra("distance", objectDistance.getDistance());
-        startActivity(intent);
+
+        finish();
 
         return super.onTouchEvent(event);
     }
+    public void onResume() {
+
+        Measurement measurement = Measurement.listAll(Measurement.class).get(0);
+        measure_device_height = measurement.getDevice_height();
+
+        mCamera = null;
+        try {
+            mCamera = Camera.open();
+        }
+        catch (Exception e) {
+            finish();
+        }
 
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_camera_prev);
-
-        measure_device_height = getIntent().getIntExtra("height",150);
-
-        mCamera = Camera.open();
         Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
         switch ( display.getRotation()){
             case Surface.ROTATION_90:
@@ -88,7 +92,6 @@ public class GetDistanceActivity extends Activity  {
                 break;
         }
 
-       // Create our Preview view and set it as the content of our activity.
         mPreview = new CameraPreview(this, mCamera);
         RelativeLayout preview = (RelativeLayout) findViewById(R.id.camera_preview);
         preview.addView(mPreview);
@@ -98,7 +101,13 @@ public class GetDistanceActivity extends Activity  {
 
         customHandler = new Handler();
         customHandler.postDelayed(updateTimerThread,0);
+        super.onResume();
+    }
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_camera_prev);
     }
 
 }

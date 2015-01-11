@@ -1,7 +1,6 @@
 package com.tree.sstarzak.treevolume;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -57,14 +56,13 @@ public class GetHeightActivity extends Activity implements View.OnClickListener 
         height_value_tv.setText(String.valueOf(seekBar.getProgress() + 100));
     }
 
+
     @Override
     public void onClick(View view) {
-        Measurement measurement = new Measurement(0, 0, 0, 0, 0);
+
+        Measurement measurement = Measurement.listAll(Measurement.class).get(0);
         measurement.setDevice_height(height_value);
         measurement.save();
-
-        Intent intent = new Intent(getApplicationContext(), GetDistanceActivity.class);
-        intent.putExtra("height", height_value);
-        startActivity(intent);
+        finish();
     }
 }

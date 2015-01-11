@@ -3,6 +3,7 @@
     package="com.tree.sstarzak.treevolume" >
 
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <uses-feature android:name="android.hardware.camera" />
 
@@ -26,7 +27,7 @@
             android:value="com.tree" />
 ,
         <activity
-            android:name=".GetHeightActivity"
+            android:name=".MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -45,8 +46,16 @@
             android:theme="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen" >
         </activity>
         <activity
-            android:name=".DbActivity"
+            android:name=".GetHeightActivity"
             android:label="@string/title_activity_db" >
+        </activity>
+        <activity
+            android:name=".TakingPhotoActivity1"
+            android:label="@string/title_activity_taking_photo" >
+        </activity>
+        <activity
+            android:name=".TakingPhotoActivity2"
+            android:label="@string/title_activity_taking_photo_activity2" >
         </activity>
     </application>
 
