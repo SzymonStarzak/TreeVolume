@@ -72,10 +72,6 @@ public class GetTreeLengthActivity extends Activity {
             Measurement measurement = Measurement.listAll(Measurement.class).get(0);
             measurement.setObject_length(objectLength.getLengh());
             measurement.save();
-
-          /*  Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-            startActivity(intent);*/
-
             finish();
         }
         touch_counter++;

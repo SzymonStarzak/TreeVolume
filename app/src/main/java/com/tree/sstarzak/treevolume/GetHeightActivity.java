@@ -51,11 +51,9 @@ public class GetHeightActivity extends Activity implements View.OnClickListener 
             }
         });
 
-
         height_value_tv = (TextView) findViewById(R.id.height_value);
         height_value_tv.setText(String.valueOf(seekBar.getProgress() + 100));
     }
-
 
     @Override
     public void onClick(View view) {

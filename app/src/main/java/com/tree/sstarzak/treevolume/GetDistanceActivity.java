@@ -20,13 +20,15 @@ public class GetDistanceActivity extends Activity  {
 
     private CameraPreview mPreview;
 
-    MySensors mySensors;
+    private MySensors mySensors;
 
-    Handler customHandler;
+    private Handler customHandler;
 
-    float measure_device_height;
+    private float measure_device_height;
 
-    ObjectDistance objectDistance;
+    private ObjectDistance objectDistance;
+
+    private int measurement_type;
 
     @Override
     protected void onStop() {
@@ -52,7 +54,12 @@ public class GetDistanceActivity extends Activity  {
     public boolean onTouchEvent(MotionEvent event) {
 
         Measurement measurement = Measurement.listAll(Measurement.class).get(0);
-        measurement.setDistance_from_side(objectDistance.getDistance());
+        switch (measurement_type) {
+            case 0: measurement.setDistance_from_side(objectDistance.getDistance()); break;
+            case 1: measurement.setDistance_from_first_d(objectDistance.getDistance());break;
+            case 2: measurement.setDistance_from_secont_d(objectDistance.getDistance());break;
+        }
+
         measurement.save();
 
         mCamera.release();
@@ -74,7 +81,6 @@ public class GetDistanceActivity extends Activity  {
             mCamera = Camera.open();
         }
         catch (Exception e) {
-            finish();
         }
 
 
@@ -108,6 +114,8 @@ public class GetDistanceActivity extends Activity  {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera_prev);
+
+        measurement_type = getIntent().getIntExtra("m_type",0);
     }
 
 }
