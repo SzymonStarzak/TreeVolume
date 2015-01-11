@@ -3,6 +3,7 @@ package com.tree.sstarzak.treevolume;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -23,7 +24,7 @@ public class GetHeightActivity extends Activity implements View.OnClickListener 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_get_height);
 
-        this.deleteDatabase("measurement.db");
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         height_value = 150;
 

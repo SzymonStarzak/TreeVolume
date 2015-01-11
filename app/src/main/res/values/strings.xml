@@ -9,5 +9,6 @@
     <string name="title_activity_taking_photo">TakingPhotoActivity</string>
     <string name="title_activity_taking_photo_activity2">TakingPhotoActivity2</string>
     <string name="title_activity_get_left_side_dendrochronology">GetLeftSideDendrochronology</string>
+    <string name="title_activity_how_to_measure">HowToMeasureActivity</string>
 
 </resources>

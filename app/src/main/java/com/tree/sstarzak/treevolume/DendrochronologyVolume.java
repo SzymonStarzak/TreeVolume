@@ -61,7 +61,9 @@ public class DendrochronologyVolume {
         return (float) (2 * distance * Math.tan(0.5 * Math.abs(angle * (Math.PI / 180))));
     }
 
-    public float getVolume() {
+    public float getMaxVolume() {
         return ((getAB() + getDC()))/2 * ((getAD()+getBC())/2);
     }
+
+    public float getVolume() {return (float) (Math.PI * (((getAB()/2 + getDC()/2))/2 * ((getAD()/2+getBC()/2)/2)));}
 }

@@ -51,7 +51,7 @@ public class GetDendrochronology extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_get_dendrochronology);
-
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         measurement_type = getIntent().getIntExtra("d_type", 0);
 
         Measurement measurement = Measurement.listAll(Measurement.class).get(0);
@@ -117,8 +117,10 @@ public class GetDendrochronology extends Activity {
                         distance);
 
                 if (measurement_type == 0) {
+                    measurement.setMax_volume_back_side(dendrochronologyVolume.getMaxVolume());
                     measurement.setVolume_back_side(dendrochronologyVolume.getVolume());
                 } else {
+                    measurement.setMax_volume_front_side(dendrochronologyVolume.getMaxVolume());
                     measurement.setVolume_front_side(dendrochronologyVolume.getVolume());
                 }
                 measurement.save();

@@ -83,7 +83,6 @@ public class GetDistanceActivity extends Activity  {
         catch (Exception e) {
         }
 
-
         Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
         switch ( display.getRotation()){
             case Surface.ROTATION_90:
@@ -114,7 +113,7 @@ public class GetDistanceActivity extends Activity  {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera_prev);
-
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         measurement_type = getIntent().getIntExtra("m_type",0);
     }
 
