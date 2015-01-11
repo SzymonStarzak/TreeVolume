@@ -14,9 +14,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
     protected void onResume() {
         super.onResume();
         Measurement m = Measurement.listAll(Measurement.class).get(0);
-        TextView tv = (TextView) findViewById(R.id.textView);
 
-        tv.setText(String .valueOf(m.getVolume_back_side()));
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +61,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 break;
             case R.id.button5:
                 intent = new Intent(this, GetDendrochronology.class);
-                intent.putExtra("m_type",0);
+                intent.putExtra("d_type",0);
                 break;
             case R.id.button6:
                 intent = new Intent(this, GetDistanceActivity.class);
@@ -71,10 +69,18 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 break;
             case R.id.button7:
                 intent = new Intent(this, GetDendrochronology.class);
-                intent.putExtra("m_type",1);
+                intent.putExtra("d_type",1);
                 break;
-            case R.id.button8: intent = new Intent(this, TakingPhotoActivity2.class); break;
+            case R.id.button8:
+                Measurement m = Measurement.listAll(Measurement.class).get(0);
+
+                 TextView tv = (TextView) findViewById(R.id.textView);
+                 tv.setText(String .valueOf(
+                         ((m.getVolume_back_side()/100 + m.getDistance_from_side()/100)/2) * m.getObject_length()/100
+                 ) + " m^3");
+                break;
         }
+        if(intent != null)
         startActivity(intent);
     }
 }

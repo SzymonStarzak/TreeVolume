@@ -45,13 +45,22 @@ public class GetDendrochronology extends Activity {
 
     private int touch_counter;
 
+    private int measurement_type;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_get_dendrochronology);
 
+        measurement_type = getIntent().getIntExtra("d_type", 0);
+
         Measurement measurement = Measurement.listAll(Measurement.class).get(0);
-        distance = measurement.getDistance_from_first_d();
+        if (measurement_type == 0) {
+            distance = measurement.getDistance_from_first_d();
+        } else {
+            distance = measurement.getDistance_from_secont_d();
+        }
+
     }
 
     @Override
@@ -74,7 +83,7 @@ public class GetDendrochronology extends Activity {
             tf.setTextColor(Color.RED);
 
 
-            tf.setText(String.valueOf(touch_counter));
+            tf.setText(String.valueOf(touch_counter/2 + 1));
             customHandler.postDelayed(this, 100);
         }
     };
@@ -82,34 +91,38 @@ public class GetDendrochronology extends Activity {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
 
-     Measurement measurement = Measurement.listAll(Measurement.class).get(0);
+        Measurement measurement = Measurement.listAll(Measurement.class).get(0);
 
-     DendrochronologyVolume dendrochronologyVolume = null;
+        DendrochronologyVolume dendrochronologyVolume = null;
         switch (touch_counter) {
             case 0:
                 azimuth_angle1 = mySensors.getAzimuth_angle();
-                y_angle1 = IdentificationAngleHelper.getAngle(getApplicationContext(),mySensors.getPitch_angle(),mySensors.getRoll_angle());
+                y_angle1 = IdentificationAngleHelper.getAngle(getApplicationContext(), mySensors.getPitch_angle(), mySensors.getRoll_angle());
                 break;
             case 2:
                 azimuth_angle2 = mySensors.getAzimuth_angle();
-                y_angle2 = IdentificationAngleHelper.getAngle(getApplicationContext(),mySensors.getPitch_angle(),mySensors.getRoll_angle());
+                y_angle2 = IdentificationAngleHelper.getAngle(getApplicationContext(), mySensors.getPitch_angle(), mySensors.getRoll_angle());
                 break;
             case 4:
                 azimuth_angle3 = mySensors.getAzimuth_angle();
-                y_angle3 = IdentificationAngleHelper.getAngle(getApplicationContext(),mySensors.getPitch_angle(),mySensors.getRoll_angle());
+                y_angle3 = IdentificationAngleHelper.getAngle(getApplicationContext(), mySensors.getPitch_angle(), mySensors.getRoll_angle());
                 break;
             case 6:
                 azimuth_angle4 = mySensors.getAzimuth_angle();
-                y_angle4 = IdentificationAngleHelper.getAngle(getApplicationContext(),mySensors.getPitch_angle(),mySensors.getRoll_angle());
+                y_angle4 = IdentificationAngleHelper.getAngle(getApplicationContext(), mySensors.getPitch_angle(), mySensors.getRoll_angle());
                 dendrochronologyVolume = new DendrochronologyVolume(azimuth_angle1, y_angle1,
-                        azimuth_angle2,y_angle2,
-                        azimuth_angle3,y_angle3,
-                        azimuth_angle4,y_angle4,
-                        measurement.getDistance_from_first_d());
+                        azimuth_angle2, y_angle2,
+                        azimuth_angle3, y_angle3,
+                        azimuth_angle4, y_angle4,
+                        distance);
 
-                        measurement.setVolume_back_side(dendrochronologyVolume.getVolume());
-                        measurement.save();
-                        finish();
+                if (measurement_type == 0) {
+                    measurement.setVolume_back_side(dendrochronologyVolume.getVolume());
+                } else {
+                    measurement.setVolume_front_side(dendrochronologyVolume.getVolume());
+                }
+                measurement.save();
+                finish();
                 break;
         }
         touch_counter++;
@@ -129,7 +142,6 @@ public class GetDendrochronology extends Activity {
             finish();
         }
 
-
         Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
         switch (display.getRotation()) {
             case Surface.ROTATION_90:
@@ -143,8 +155,6 @@ public class GetDendrochronology extends Activity {
                 mCamera.setDisplayOrientation(360);
                 break;
         }
-
-
         mPreview = new CameraPreview(this, mCamera);
         RelativeLayout preview = (RelativeLayout) findViewById(R.id.camera_preview);
         preview.addView(mPreview);

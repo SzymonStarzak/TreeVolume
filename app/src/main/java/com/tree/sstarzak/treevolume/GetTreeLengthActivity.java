@@ -59,7 +59,7 @@ public class GetTreeLengthActivity extends Activity {
                 azimuth_angle2 = mySensors.getAzimuth_angle();
 
                 objectLength = new ObjectLength(getApplicationContext(), azimuth_angle1, azimuth_angle2, distance);
-                tf.setText(objectLength.getLengthAsStringUnitMeter() + " m");
+                tf.setText(objectLength.getLengthAsStringUnitMeter() + " m " + objectLength.getAngle());
             }
             customHandler.postDelayed(this, 100);
         }
@@ -82,7 +82,7 @@ public class GetTreeLengthActivity extends Activity {
     public void onResume() {
 
         Measurement measurement = Measurement.listAll(Measurement.class).get(0);
-        distance = measurement.getDevice_height();
+        distance = measurement.getDistance_from_side();
 
         touch_counter = 0;
 
