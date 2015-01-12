@@ -88,13 +88,13 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 Measurement m = Measurement.listAll(Measurement.class).get(0);
 
                  TextView tv = (TextView) findViewById(R.id.textView);
-                 tv.setText("Max: " + String .valueOf(
+                 tv.setText("Max Object Volume: " + String .valueOf(
                          ((m.getMax_volume_back_side()/100 + m.getMax_volume_front_side()/100)/2) * (m.getObject_length()/100)
                  ) + " m^3\n");
                 tv.append("Estimated Tree Volume: "+String.valueOf(
                                 ((m.getVolume_back_side()/100 + m.getVolume_front_side()/100)/2) * (m.getObject_length()/100)
                         ) + " m^3\n"
-                ); 
+                );
                 break;
         }
         if(intent != null)

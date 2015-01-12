@@ -26,7 +26,7 @@
                 android:id="@+id/button_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Jak wykonać pomiar" />
+                android:text="Jak wykonać pomiar ?" />
 
             <Button
                 android:id="@+id/button"
@@ -75,7 +75,7 @@
                 android:id="@+id/textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Large Text"
+                android:text=" "
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 
             <Button
