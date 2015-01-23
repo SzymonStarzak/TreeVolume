@@ -81,7 +81,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 intent.putExtra("m_type", 1);
                 break;
             case R.id.button5:
-                intent = new Intent(this, GetDendrochronology.class);
+                intent = new Intent(this, GetDendrochronology2.class);
                 intent.putExtra("d_type", 0);
                 break;
             case R.id.button6:
@@ -89,7 +89,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 intent.putExtra("m_type", 2);
                 break;
             case R.id.button7:
-                intent = new Intent(this, GetDendrochronology.class);
+                intent = new Intent(this, GetDendrochronology2.class);
                 intent.putExtra("d_type", 1);
                 break;
             case R.id.button8:

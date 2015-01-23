@@ -61,6 +61,10 @@
             android:name=".HowToMeasureActivity"
             android:label="@string/title_activity_how_to_measure" >
         </activity>
+        <activity
+            android:name=".GetDendrochronology2"
+            android:label="@string/title_activity_get_dendrochronology2" >
+        </activity>
     </application>
 
 </manifest>
