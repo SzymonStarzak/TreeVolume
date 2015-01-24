@@ -19,9 +19,11 @@
         <ImageView
             android:id="@+id/imageView1"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="fill_parent"
             android:layout_gravity="center"
             android:src="@drawable/ic_launcher" />
+
+
     </LinearLayout>
 
     <ScrollView
@@ -180,5 +182,12 @@
                 android:text="R" />
         </LinearLayout>
     </LinearLayout>
-
+    <Button
+        android:id="@+id/confirm"
+        android:layout_width="match_parent"
+        android:background="#AF00b000"
+        android:layout_marginTop="5dp"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_height="30dp"
+        android:text="Zatwierdz" />
 </LinearLayout>

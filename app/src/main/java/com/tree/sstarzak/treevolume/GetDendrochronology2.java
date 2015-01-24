@@ -41,11 +41,11 @@ public class GetDendrochronology2 extends Activity implements SeekBar.OnSeekBarC
     Bitmap binarizedImage;
     ImageView iv;
     TextView tv;
-    Button opening,closeing,erode,dilatate,reset;
+    Button opening,closeing,erode,dilatate,reset,confirm;
     int contrast = 0;
     int brightness = 0;
-    int all_px;
-    int white_px;
+    int all_px =1;
+    int white_px= 1;
     private final int SELECT_PHOTO = 1;
 
     @Override
@@ -96,6 +96,9 @@ public class GetDendrochronology2 extends Activity implements SeekBar.OnSeekBarC
 
         reset = (Button) findViewById(R.id.reset);
         reset.setOnClickListener(this);
+
+        confirm = (Button) findViewById(R.id.confirm);
+        confirm.setOnClickListener(this);
 
         iv = (ImageView) findViewById(R.id.imageView1);
         iv.setImageBitmap(BitmapFactory.decodeResource(this.getResources(), ID_RES));
@@ -152,7 +155,6 @@ public class GetDendrochronology2 extends Activity implements SeekBar.OnSeekBarC
     public void onStartTrackingTouch(SeekBar seekBar) {
 
     }
-
     @Override
     public void onStopTrackingTouch(SeekBar seekBar) {
 
@@ -164,9 +166,6 @@ public class GetDendrochronology2 extends Activity implements SeekBar.OnSeekBarC
            case R.id.seekBar5:
 
                BinarizeImage();
-               white_px = 0;
-               all_px = binarizedImage.getWidth() * binarizedImage.getHeight();
-
                break;
        }
         tv.setText(String.valueOf(white_px) + '/' + String.valueOf(all_px));
@@ -178,6 +177,8 @@ public class GetDendrochronology2 extends Activity implements SeekBar.OnSeekBarC
                 theOriginalImage.copy(theOriginalImage.getConfig(), true),
                 contrast,
                 brightness);
+        white_px = 0;
+        all_px = binarizedImage.getWidth() * binarizedImage.getHeight();
         for (int i = 0; i < binarizedImage.getWidth(); i++) {
             for (int c = 0; c < binarizedImage.getHeight(); c++) {
                 int pixel = binarizedImage.getPixel(i, c);
@@ -194,9 +195,10 @@ public class GetDendrochronology2 extends Activity implements SeekBar.OnSeekBarC
     public void onClick(View view) {
         System.loadLibrary("opencv_java");
         switch (view.getId()) {
-            case R.id.imageView1:   Intent photoPickerIntent = new Intent(Intent.ACTION_GET_CONTENT);
-                                    photoPickerIntent.setType("image/jpg");
-                                    startActivityForResult(photoPickerIntent, SELECT_PHOTO);
+            case R.id.imageView1:
+                Intent photoPickerIntent = new Intent(Intent.ACTION_GET_CONTENT);
+                photoPickerIntent.setType("image/jpg");
+                startActivityForResult(photoPickerIntent, SELECT_PHOTO);
                 break;
             default:
                 Mat src = new Mat(binarizedImage.getWidth(), binarizedImage.getHeight(), CvType.CV_8UC1);
@@ -222,6 +224,17 @@ public class GetDendrochronology2 extends Activity implements SeekBar.OnSeekBarC
                         break;
                     case R.id.reset:
                         BinarizeImage();
+                        break;
+                    case R.id.confirm:
+
+                        Measurement measurement = Measurement.listAll(Measurement.class).get(0);
+                        if(getIntent().getIntExtra("d_type",0) == 0)
+                         measurement.setVolume_back_side((float) white_px/all_px);
+                        else
+                            measurement.setVolume_front_side((float) white_px/all_px);
+
+                        measurement.save();
+                        finish();
                         break;
                 }
                 iv.setImageBitmap(binarizedImage);

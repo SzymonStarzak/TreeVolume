@@ -102,15 +102,9 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 tv.append("Object length: " + String.valueOf(m.getObject_length()/100)+ " m\n");
                 tv.append("Distance from back: " + String.valueOf(m.getDistance_from_first_d()/100)+ " m\n");
                 tv.append("Distance from front: " + String.valueOf(m.getDistance_from_secont_d()/100)+ " m\n");
-                tv.append("Surface max area1: " + String.valueOf(m.getMax_volume_back_side()/100)+ " m\n");
-                tv.append("Surface max area2: " + String.valueOf(m.getMax_volume_front_side()/100)+ " m\n");
-                tv.append("Max Object Volume: " + String.valueOf(
-                        ((m.getMax_volume_back_side() / 100 + m.getMax_volume_front_side() / 100) / 2) * (m.getObject_length() / 100)
-                ) + " m^3\n");
-                tv.append("Estimated Tree Volume: " + String.valueOf(
-                                ((m.getVolume_back_side() / 100 + m.getVolume_front_side() / 100) / 2) * (m.getObject_length() / 100)
-                        ) + " m^3\n"
-                );
+                tv.append("Surface ratio area1: " + String.valueOf(m.getVolume_back_side())+ " m\n");
+                tv.append("Surface ratio area2: " + String.valueOf(m.getVolume_front_side())+ " m\n");
+
                 break;
         }
         if (intent != null)

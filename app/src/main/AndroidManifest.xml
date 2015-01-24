@@ -52,12 +52,6 @@
             android:theme="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen" >
         </activity>
         <activity
-            android:name=".GetDendrochronology"
-            android:label="@string/title_activity_get_left_side_dendrochronology"
-            android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen" >
-        </activity>
-        <activity
             android:name=".HowToMeasureActivity"
             android:label="@string/title_activity_how_to_measure" >
         </activity>

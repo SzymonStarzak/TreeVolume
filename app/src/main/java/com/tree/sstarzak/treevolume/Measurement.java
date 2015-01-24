@@ -21,10 +21,6 @@ public class Measurement extends SugarRecord<Measurement> {
 
     private float volume_back_side;
 
-    private float max_volume_front_side;
-
-    private float max_volume_back_side;
-
     public float getDevice_height() {
         return device_height;
     }
@@ -81,22 +77,6 @@ public class Measurement extends SugarRecord<Measurement> {
         this.volume_back_side = volume_back_side;
     }
 
-    public float getMax_volume_front_side() {
-        return max_volume_front_side;
-    }
-
-    public void setMax_volume_front_side(float max_volume_front_side) {
-        this.max_volume_front_side = max_volume_front_side;
-    }
-
-    public float getMax_volume_back_side() {
-        return max_volume_back_side;
-    }
-
-    public void setMax_volume_back_side(float max_volume_back_side) {
-        this.max_volume_back_side = max_volume_back_side;
-    }
-
     public Measurement() {
     }
 
@@ -108,7 +88,5 @@ public class Measurement extends SugarRecord<Measurement> {
         this.distance_from_secont_d = distance_from_secont_d;
         this.volume_front_side = volume_front_side;
         this.volume_back_side = volume_back_side;
-        this.max_volume_front_side = max_volume_front_side;
-        this.max_volume_back_side = max_volume_back_side;
     }
 }
