@@ -45,7 +45,7 @@ public class GetDendrochronology2 extends Activity implements SeekBar.OnSeekBarC
     int contrast = 0;
     int brightness = 0;
     int all_px =1;
-    int white_px= 1;
+    int white_px= 0;
     private final int SELECT_PHOTO = 1;
 
     @Override
