@@ -30,7 +30,7 @@ import java.io.InputStream;
 
 public class GetDendrochronology2 extends Activity implements SeekBar.OnSeekBarChangeListener, View.OnClickListener {
 
-    int ID_RES = R.drawable.sloje2;
+    int ID_RES = R.drawable.sloje6;
     SeekBar sb1;
     SeekBar sb2;
     SeekBar sb3;
@@ -47,6 +47,8 @@ public class GetDendrochronology2 extends Activity implements SeekBar.OnSeekBarC
     int all_px =1;
     int white_px= 0;
     private final int SELECT_PHOTO = 1;
+
+    private  float GALAXY_S3_CAMERA_AREA_RATION =  4f / 5f;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -208,19 +210,19 @@ public class GetDendrochronology2 extends Activity implements SeekBar.OnSeekBarC
                 switch (view.getId()) {
                     case R.id.open:
                         Imgproc.morphologyEx(src,dst, Imgproc.MORPH_OPEN, kernel);
-                        Utils.matToBitmap(dst,binarizedImage);
+                        Utils.matToBitmap(dst, binarizedImage);
                         break;
                     case R.id.close:
                         Imgproc.morphologyEx(src,dst, Imgproc.MORPH_CLOSE, kernel);
-                        Utils.matToBitmap(dst,binarizedImage);
+                        Utils.matToBitmap(dst, binarizedImage);
                         break;
                     case R.id.erode:
                         Imgproc.erode(src,dst, kernel);
-                        Utils.matToBitmap(dst,binarizedImage);
+                        Utils.matToBitmap(dst, binarizedImage);
                         break;
                     case R.id.dilatate:
                         Imgproc.dilate(src,dst, kernel);
-                        Utils.matToBitmap(dst,binarizedImage);
+                        Utils.matToBitmap(dst, binarizedImage);
                         break;
                     case R.id.reset:
                         BinarizeImage();
@@ -229,9 +231,9 @@ public class GetDendrochronology2 extends Activity implements SeekBar.OnSeekBarC
 
                         Measurement measurement = Measurement.listAll(Measurement.class).get(0);
                         if(getIntent().getIntExtra("d_type",0) == 0)
-                         measurement.setVolume_back_side((float) white_px/all_px);
+                         measurement.setVolume_first_side((float) (((float) white_px / all_px) * GALAXY_S3_CAMERA_AREA_RATION * Math.pow(measurement.getDistance_from_first_d(), 2.0)));
                         else
-                            measurement.setVolume_front_side((float) white_px/all_px);
+                            measurement.setVolume_second_side((float) (((float) white_px / all_px) * GALAXY_S3_CAMERA_AREA_RATION * Math.pow(measurement.getDistance_from_second_d(), 2.0)));
 
                         measurement.save();
                         finish();

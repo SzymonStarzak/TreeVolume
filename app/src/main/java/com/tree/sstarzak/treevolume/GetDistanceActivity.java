@@ -57,7 +57,7 @@ public class GetDistanceActivity extends Activity  {
         switch (measurement_type) {
             case 0: measurement.setDistance_from_side(objectDistance.getDistance()); break;
             case 1: measurement.setDistance_from_first_d(objectDistance.getDistance());break;
-            case 2: measurement.setDistance_from_secont_d(objectDistance.getDistance());break;
+            case 2: measurement.setDistance_from_second_d(objectDistance.getDistance());break;
         }
 
         measurement.save();

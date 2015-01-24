@@ -43,6 +43,11 @@ public class MySensors  implements SensorEventListener {
         mSensorManager.unregisterListener(this);
     }
 
+    public void cameraParameters() {
+
+    }
+
+
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
         azimuth_angle = sensorEvent.values[0];
