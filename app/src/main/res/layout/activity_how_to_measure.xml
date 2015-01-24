@@ -49,11 +49,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="200dp"
-                android:text="Pomiar pola powierzchni:
-            \n1) Skieruj celownik na lewy górny najbardziej wysunięty punkt obiektu a następnie dotknij ekranu.
-            \n2) Skieruj celownik na prawy górny najbardziej wysunięty punkt obiektu a następnie dotknij ekranu.
-            \n3) Skieruj celownik na prawy dolny najbardziej wysunięty punkt obiektu a następnie dotknij ekranu.
-            \n4) Skieruj celownik na lewy dolny najbardziej wysunięty punkt obiektu a następnie dotknij ekranu."
+                android:text="Pomiar pola powierzchni: Dotykając miejsca w którym wyświetlany jest obraz, wczytaj odpowiedzni obraz. Używaj suwaków tak aby biały kolor wypełniał te miejsca w kótych znajduje się słój drzewa. Następnie wybierz przycisk zatwierdź "
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <TextView

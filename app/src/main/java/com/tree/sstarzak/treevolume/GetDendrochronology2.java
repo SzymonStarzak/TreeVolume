@@ -30,7 +30,7 @@ import java.io.InputStream;
 
 public class GetDendrochronology2 extends Activity implements SeekBar.OnSeekBarChangeListener, View.OnClickListener {
 
-    int ID_RES = R.drawable.sloje6;
+    int ID_RES = R.drawable.sloje5;
     SeekBar sb1;
     SeekBar sb2;
     SeekBar sb3;
@@ -193,6 +193,14 @@ public class GetDendrochronology2 extends Activity implements SeekBar.OnSeekBarC
             }
         }
     }
+    public int countWhitePixels(Bitmap binarizedImage) {
+        int white_px = 0;
+        for (int i = 0; i < binarizedImage.getWidth(); i++)
+            for (int c = 0; c < binarizedImage.getHeight(); c++)
+                if(binarizedImage.getPixel(i,c) == Color.WHITE)
+                    white_px++;
+        return white_px;
+    }
     @Override
     public void onClick(View view) {
         System.loadLibrary("opencv_java");
@@ -230,6 +238,7 @@ public class GetDendrochronology2 extends Activity implements SeekBar.OnSeekBarC
                     case R.id.confirm:
 
                         Measurement measurement = Measurement.listAll(Measurement.class).get(0);
+
                         if(getIntent().getIntExtra("d_type",0) == 0)
                          measurement.setVolume_first_side((float) (((float) white_px / all_px) * GALAXY_S3_CAMERA_AREA_RATION * Math.pow(measurement.getDistance_from_first_d(), 2.0)));
                         else
@@ -239,7 +248,9 @@ public class GetDendrochronology2 extends Activity implements SeekBar.OnSeekBarC
                         finish();
                         break;
                 }
+                white_px = countWhitePixels(binarizedImage);
                 iv.setImageBitmap(binarizedImage);
+                tv.setText(String.valueOf(white_px) + '/' + String.valueOf(all_px));
                 break;
         }
         }
